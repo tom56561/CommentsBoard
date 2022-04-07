@@ -21,4 +21,6 @@ Route::get('/test', function () {
     return 'Hello Rookie!!';
 });
 
-Route::get('/message', 'Rookie\MessageController@getMessage');
+Route::get('/message', 'TestController@getTest');
+Route::get('/gamecode', 'Rookie\MessageController@getGameCodeList');
+Route::get('/gamecode/{gametype}', 'Rookie\MessageController@getGameCodeByGameType');

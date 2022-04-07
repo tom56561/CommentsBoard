@@ -1,0 +1,48 @@
+# php74
+FROM alpine:3.13
+
+RUN apk add php
+RUN apk add php-mbstring php-openssl php-pdo php-xml php-tokenizer php-ctype php-curl php-dom php-fileinfo php-iconv php-intl php-mysqlnd php-pdo_mysql php-mysqli php-pdo_sqlite php-posix php-session php-simplexml php-soap php-sqlite3 php-xmlreader php-xmlwriter php-zlib php-opcache php-pcntl zlib zlib-dev php-sockets php-fpm php-gd php-bcmath php-phar php-zip
+RUN apk add php7-mcrypt php7-redis php7-json
+RUN apk add bash curl
+RUN apk add php7-xdebug
+
+# set timezone
+RUN apk add tzdata
+RUN cp /usr/share/zoneinfo/Asia/Taipei /etc/localtime
+RUN echo "Asia/Taipei" > /etc/timezone
+RUN apk del tzdata
+
+RUN sed -i "s/serialize_precision = -1/serialize_precision = 17/g" /etc/php7/php.ini && \
+    sed -i "s/;date.timezone =/date.timezone = 'Asia\/Taipei'/g" /etc/php7/php.ini && \
+    sed -i 's/pm = dynamic/pm = static/g' /etc/php7/php-fpm.d/www.conf && \
+    sed -i 's/pm.max_children = 5/pm.max_children = 64/g' /etc/php7/php-fpm.d/www.conf && \
+    sed -i 's/;pm.max_requests = 500/pm.max_requests = 500/g' /etc/php7/php-fpm.d/www.conf && \
+    sed -i "s/track_errors = Off/track_errors = On/g" /etc/php7/php.ini && \
+    sed -i 's/;opcache.enable=1/opcache.enable=1/g' /etc/php7/php.ini && \
+    sed -i 's/;opcache.enable_cli=0/opcache.enable_cli=1/g' /etc/php7/php.ini && \
+    sed -i 's/;opcache.memory_consumption=128/opcache.memory_consumption=512/g' /etc/php7/php.ini && \
+    sed -i 's/;opcache.interned_strings_buffer=8/opcache.interned_strings_buffer=64/g' /etc/php7/php.ini && \
+    sed -i 's/;opcache.max_accelerated_files=10000/opcache.max_accelerated_files=32531/g' /etc/php7/php.ini && \
+    sed -i 's/;opcache.validate_timestamps=1/opcache.validate_timestamps=60/g' /etc/php7/php.ini && \
+    sed -i 's/;opcache.save_comments=1/opcache.save_comments=1/g' /etc/php7/php.ini && \
+    sed -i 's/;opcache.fast_shutdown=0/opcache.fast_shutdown=0/g' /etc/php7/php.ini && \
+    sed -i "s/display_startup_errors = Off/display_startup_errors = On/g" /etc/php7/php.ini && \
+    #sed -i "s/display_errors = Off/display_errors = On/g" /etc/php7/php.ini && \
+    sed -i "s/error_reporting = E_ALL & E_DEPRECATED & E_STRICT/error_reporting = 0/g" /etc/php7/php.ini && \
+    sed -i 's/user = nobody/user = root/g' /etc/php7/php-fpm.d/www.conf && \
+    sed -i 's/group = nobody/group = root/g' /etc/php7/php-fpm.d/www.conf && \
+    sed -i 's/listen = 127.0.0.1:9000/listen = \/var\/run\/php-fpm.sock/g' /etc/php7/php-fpm.d/www.conf && \
+    sed -i 's/;pid = run\/php-fpm7.pid/pid = \/run\/php-fpm7.pid/g' /etc/php7/php-fpm.d/www.conf && \
+    sed -i 's/;listen.mode = 0660/listen.mode = 0666/g' /etc/php7/php-fpm.d/www.conf
+
+RUN echo "zend_extension=/usr/lib/php7/modules/xdebug.so" >> /etc/php7/php.ini
+RUN echo "xdebug.mode=coverage" >> /etc/php7/php.ini
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
+RUN mkdir -p /var/www
+WORKDIR /var/www
+
+# docker run --rm --interactive --user $(id -u):$(id -g) --volume $PWD:/var/www composer_rookie:1.0.1 composer install --no-dev
+# docker run --rm --interactive --user $(id -u):$(id -g) --volume $PWD:/var/www composer_rookie:1.0.1 composer require --dev phpunit/phpunit
+# docker build -t composer_rookie:1.0.1 -f composerDocker .

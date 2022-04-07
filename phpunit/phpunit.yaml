@@ -1,0 +1,13 @@
+version: '3.6'
+services:
+  rookie_training:
+    build:
+      context: .
+      dockerfile: DockerFile
+    image: rookie_training
+    container_name: rookie_training_phpunit
+    volumes:
+           - ./../../rookie_training:/home/gbt/rookie_training/
+    command: [ "sh", "-c", "cd /home/gbt/rookie_training/;./vendor/bin/phpunit --coverage-html reports/" ]
+    # command: [ "sh", "-c", "cd /home/gbt/rookie_training/;composer dump-autoload;./vendor/bin/phpunit -c phpunit.xml" ]
+
