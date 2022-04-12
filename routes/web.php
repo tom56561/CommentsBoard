@@ -18,9 +18,12 @@ Route::get('/', function () {
 });
 
 Route::get('/test', function () {
-    return 'Hello Rookie!!';
+    return 'Hello Jarek!!';
 });
 
 Route::get('/message', 'TestController@getTest');
 Route::get('/gamecode', 'Rookie\MessageController@getGameCodeList');
 Route::get('/gamecode/{gametype}', 'Rookie\MessageController@getGameCodeByGameType');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
