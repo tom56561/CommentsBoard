@@ -1,0 +1,42 @@
+ul li{
+    list-style-type:none;
+    display: inline;
+    padding: 0;
+ }
+ 
+.bg-cover{
+    object-fit: cover;
+}
+
+.img-host{
+    height: 50px;
+    width: 50px;
+}
+
+.img-content{
+    width: 600px;
+    height: 366px;
+    object-fit: cover;
+
+}
+
+.border-card{
+    border-radius: 8px;
+}
+
+.commentW{
+    width: 470px;
+}
+
+.btn-main{
+    color: #fff;
+    background-color: #41b2ac;
+    border-color: #41b2ac;
+}
+
+.btn-orange{
+    color: #fff;
+    background-color: #ffa101;
+    border-color: #ffa101;
+}
+

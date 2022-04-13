@@ -13,14 +13,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Auth::routes();
+
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+/*留言板*/
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/posts', 'Posts\PostController@index')->name('posts.index');
+    Route::post('/posts', 'Posts\PostController@store')->name('posts.store');
+    Route::get('/posts/{post}', 'Posts\PostController@show')->name('posts.show');
+    Route::put('/posts/{post}', 'Posts\PostController@update')->name('posts.update')->middleware('userEdit');
+    Route::delete('/posts/{post}', 'Posts\PostController@destroy')->name('posts.destroy')->middleware('adminCheck');
 });
 
-Route::get('/test', function () {
-    return 'Hello Rookie!!';
+/*會員系統*/
+Route::group(['middleware' => ['auth','adminCheck']], function () {
+    Route::get('/users', 'Users\UserController@index')->name('users.index');
+    Route::put('/users/{user}', 'Users\UserController@update')->name('users.update');
+    Route::delete('/users/{user}', 'Users\UserController@destroy')->name('users.destroy');
+    Route::post('/users/search', 'Users\UserController@search')->name('users.search');
 });
 
-Route::get('/message', 'TestController@getTest');
-Route::get('/gamecode', 'Rookie\MessageController@getGameCodeList');
-Route::get('/gamecode/{gametype}', 'Rookie\MessageController@getGameCodeByGameType');
