@@ -52,6 +52,9 @@
                                 </li>
                             @endif
                         @else
+                            <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('posts.create') }}">{{ __('Create Post') }}</a>
+                            </li>ß
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
@@ -76,7 +79,8 @@
         </nav>
 
         <main class="py-4">
-            @yield('content')
+            @yield('content')      
+            <!-- 繼承home.blade.php的content  -->
         </main>
     </div>
 </body>
