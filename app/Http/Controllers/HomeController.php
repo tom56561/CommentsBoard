@@ -11,7 +11,9 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    
+    //必須要登入網站後，才能使用這個Controller
+     public function __construct()
     {
         $this->middleware('auth');
     }

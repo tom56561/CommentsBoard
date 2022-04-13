@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Route::get('/test', function () {
@@ -31,3 +31,7 @@ Route::get('/gamecode/{gametype}', 'Rookie\MessageController@getGameCodeByGameTy
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+//將/post綁定到App\Http\...PostController
+//代表PostController這個控制器要在登入下才能存取
+Route::resource('/posts',PostController::class)->middleware('auth');
