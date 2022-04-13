@@ -13,14 +13,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Auth::routes();
 
-Route::get('/test', function () {
-    return 'Hello Rookie!!';
-});
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Route::middleware('auth:api')->group(function () {
+//     Route::apiResource('posts', 'App\Http\Controllers\Api\PostController');
+// });
+Route::apiResource('/posts', 'Posts\PostController')->middleware('auth'); 
+
 
 Route::get('/message', 'TestController@getTest');
 Route::get('/gamecode', 'Rookie\MessageController@getGameCodeList');
 Route::get('/gamecode/{gametype}', 'Rookie\MessageController@getGameCodeByGameType');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
