@@ -76,4 +76,30 @@ class GameCodeServiceTest extends TestCase
         # Assert
         $this->assertEquals($aExpected, $aActual);
     }
+
+    // public function testGetGameTypeList()
+    // {
+    //     # Arrange
+    //     $aExpected = [
+    //         3001, 3003, 3008, 3011
+    //     ];
+
+    //     # Act
+    //     $aActual = App::make(GameCodeService::class)->getGameTypeList();
+    //     # Assert
+    //     $this->assertEquals($aExpected, $aActual);
+    // }
+
+    // public function testGetGameTypeList1()
+    // {
+    //     # Arrange
+    //     $aExpected = [
+    //         3001, 3003, 3008, 3011
+    //     ];
+
+    //     # Act
+    //     $aActual = App::make(GameCodeService::class)->getGameTypeList1();
+    //     # Assert
+    //     $this->assertEquals($aExpected, $aActual);
+    // }
 }

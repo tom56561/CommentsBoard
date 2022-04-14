@@ -46,3 +46,4 @@ WORKDIR /var/www
 # docker run --rm --interactive --user $(id -u):$(id -g) --volume $PWD:/var/www composer_rookie:1.0.1 composer install --no-dev
 # docker run --rm --interactive --user $(id -u):$(id -g) --volume $PWD:/var/www composer_rookie:1.0.1 composer require --dev phpunit/phpunit
 # docker build -t composer_rookie:1.0.1 -f composerDocker .
+# docker-compose -f phpunit/phpunit.yaml up --force-recreate

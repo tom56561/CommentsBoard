@@ -37,4 +37,9 @@ class GameCodeService
     {
         echo 123;
     }
+
+    public function getGameTypeList()
+    {
+        return [3001, 3025, 3026, 3029];
+    }
 }
