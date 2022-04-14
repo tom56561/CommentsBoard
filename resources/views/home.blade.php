@@ -10,11 +10,9 @@
                 <div class="card-header">
                     #{{ $post->id }}
                     {{ $post->title }} @ {{ $post->created_at }}
-
-                    @auth
-                    <a href="{{ route('posts.edit',[$post->id]) }}">Edit)</a>
-                    @endauth
-
+                    @can('sup')
+                    <a href="{{ route('posts.edit',[$post->id]) }}">Edit</a>
+                    @endcan
                 </div>
                 
                 <div class="card-body">

@@ -45,7 +45,7 @@ class PostController extends Controller
             'content' => 'required',
         ]);
 
-        //將所有請求輸出  dd()：輸出
+        #將所有請求輸出  dd()：輸出
         //dd($request->all());
         $post = new Post;
         $post->title = request('title');
