@@ -15,9 +15,9 @@ class GameCodeService
 
     public function getGameCodeList()
     {
-        $aData = $this->oGameCodeRepo->getGameCodeList();
+        $aData   = $this->oGameCodeRepo->getGameCodeList();
         $aResult = [];
-        foreach($aData as $aGameCode){
+        foreach ($aData as $aGameCode) {
             $aResult[$aGameCode['GameType']][$aGameCode['GameCode']] = $aGameCode['GameCodeName'];
         }
         return $aResult;
@@ -25,9 +25,9 @@ class GameCodeService
 
     public function getGameCodeListByCondition($_iGameType)
     {
-        $aData = $this->oGameCodeRepo->getGameCodeListByCondition($_iGameType);
+        $aData   = $this->oGameCodeRepo->getGameCodeListByCondition($_iGameType);
         $aResult = [];
-        foreach($aData as $aGameCode){
+        foreach ($aData as $aGameCode) {
             $aResult[$aGameCode['GameType']][$aGameCode['GameCode']] = $aGameCode['GameCodeName'];
         }
         return $aResult;
@@ -36,5 +36,10 @@ class GameCodeService
     public function getTest()
     {
         echo 123;
+    }
+
+    public function getGameTypeList()
+    {
+        return [3001, 3025, 3026, 3029];
     }
 }
