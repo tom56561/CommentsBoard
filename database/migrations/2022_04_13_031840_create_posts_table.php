@@ -19,7 +19,7 @@ class CreatePostsTable extends Migration
             $table->string('title', 200);
             $table->text('content');  
             $table->integer('user_id');
-            $table->string('nickname',30) ;
+            
             $table->timestamps();
         });
     }
