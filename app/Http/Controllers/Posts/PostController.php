@@ -23,14 +23,19 @@ class PostController extends Controller
      */
     public function index()
     {
-        $aData = $this->oDashBoardService->getPostList();
+        $aData = $this->oDashBoardService->getPostListByDesc();
 
         $aResult = [
             'result' => true,
             'data'   => $aData,
         ];
+        // $jsonString = json_encode($aResult);
+        // $aTest = json_decode($jsonString);
 
-        return response()->json($aResult);
+        // dump($aData);
+        return view('posts.comment')->with('comments',$aResult);
+
+        // return response()->json($aResult);
 
         // $comments = Post::orderBy('id','DESC')->get();
         // return view('posts.comment',compact('comments'));
@@ -44,9 +49,9 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        // $oPost = $this->oDashBoardService->createNewData(request()->only('content'));
         $post = new Post;
-        $post->title = 'test';
-        $post->content = request('content');
+        $post->content = $request->content;
         $post->user_id = \Auth::id();
         $post->save();
 

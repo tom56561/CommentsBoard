@@ -13,12 +13,20 @@ class PostRepository
         $this->oPost = $_oPost;
     }
 
-    public function getPostList()
+    public function getPostListByDesc()
     {
         return $this->oPost
+            ->orderBy('id','DESC')
             ->get()
             ->toArray();
     }
+
+    public function createNewData(array $data)
+    {
+        return $this->oPost->create($data);
+    }
+
+
 
     // public function getPostListByCondition(int $_iUserId)
     // {

@@ -15,13 +15,18 @@ class DashBoardService
         $this->oPostRepo = $_oPostRepo;
     }
 
-    public function getPostList()
+    public function getPostListByDesc()
     {
-        $aData = $this->oPostRepo->getPostList();
-        foreach($aData as $Post){
-            $aData[$Post['id']] = [$Post['content']];
-        }
+        $aData = $this->oPostRepo->getPostListByDesc();
+        // foreach($aData as $Post){
+        //     $aData[$Post['user_id']][$Post['title']]=[$Post['content']];
+        // }
         return $aData;
+    }
+
+    public function createNewData(array $data)
+    {
+        return $this->oPostRepo->createNewData($data);
     }
 
 }
