@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Posts;
 
 use App\Http\Controllers\Controller;
-use App\Services\DashBoard\DashBoardService;
 use Illuminate\Http\Request;
-use App\Models\Post;
-
+use App\Services\DashBoard\DashBoardService;
 
 class PostController extends Controller
 {
@@ -29,10 +27,7 @@ class PostController extends Controller
             'result' => true,
             'data'   => $aData,
         ];
-        // $jsonString = json_encode($aResult);
-        // $aTest = json_decode($jsonString);
 
-        // dump($aData);
         return view('posts.comment')->with('comments',$aResult);
 
         // return response()->json($aResult);
@@ -47,17 +42,24 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $_oRequest)
     {
-        // $oPost = $this->oDashBoardService->createNewData(request()->only('content'));
-        $post = new Post;
-        $post->content = $request->content;
-        $post->user_id = \Auth::id();
-        $post->save();
+        $iUserId = \Auth::id();
+        $sContent = $_oRequest->content;
+        $aData = $this->oDashBoardService->addNewPost($iUserId, $sContent);
+        $aResult = [
+            'result'     => true,
+            'data'       => $aData,
+        ];
 
-        // dd($request->all());
+        return response()->json($aResult);
+        // $post = new Post;
+        // $post->content = $_oRequest->content;
+        // $post->user_id = \Auth::id();
+        // $post->save();
+
+        // dd($_oRequest->all());
         
-        return response()->json($post);
         // return redirect()->to('/posts');
  
     }
@@ -70,8 +72,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $comments = Post::orderBy('id','DESC')->get();
-        return view('posts.show',compact('comments'));
+        return 'show';
     }
 
     /**
@@ -81,10 +82,17 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $_oRequest, $_iId)
     {
-        //
-        return 'update';
+
+        $sContent = $_oRequest->content;
+        $aData = $this->oDashBoardService->editPost($_iId, $sContent);
+        $aResult = [
+            'result'     => true,
+            'data'       => $aData,
+        ];
+
+        return response()->json($aResult);
     }
 
     /**
@@ -93,9 +101,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($_iId)
     {
-        //
-        return 'destroy';
+        $bStatus = $this->oDashBoardService->deletePost($_iId);
+        return response()->json($bStatus);
     }
 }

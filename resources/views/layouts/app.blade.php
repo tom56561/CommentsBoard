@@ -57,8 +57,13 @@
                             @endif
                         @else
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('posts.index') }}">{{ __('Create Post') }}</a>
+                                    <a class="nav-link" href="{{ route('posts.index') }}">{{ __('留言板') }}</a>
                                 </li>
+                                @if( Auth::user()->role == 'admin')
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('users.index') }}">{{ __('會員系統') }}</a>
+                                </li>
+                                @endif
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}

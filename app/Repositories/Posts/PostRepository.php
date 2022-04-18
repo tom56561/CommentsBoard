@@ -2,37 +2,53 @@
 
 namespace App\Repositories\Posts;
 
-use App\Models\Post;
+use App\Models\Posts\Posts;
+
 
 class PostRepository
 {
     private $oPost;
 
-    public function __construct(Post $_oPost)
+    public function __construct(Posts $_oPost)
     {
         $this->oPost = $_oPost;
     }
 
-    public function getPostListByDesc()
+    public function getPostListByDesc() :array
     {
         return $this->oPost
-            ->orderBy('id','DESC')
-            ->get()
-            ->toArray();
+                    ->orderBy('id','DESC')
+                    ->get()
+                    ->toArray();
     }
 
-    public function createNewData(array $data)
+    public function addNewPost(int $_iUserId, string $_sContent) :array
     {
-        return $this->oPost->create($data);
+        return $this->oPost
+                    ->create(['user_id' => $_iUserId, 'content' => $_sContent])
+                    ->toArray();
     }
 
+    public function editPost(int $_iId, string $_sContent) :bool
+    {
+        return $this->oPost
+                    ->where(['id' => $_iId])
+                    ->update(['content' => $_sContent]);
+    }
 
+    public function getPostListByCondition(int $_iId) :array
+    {
+        return $this->oPost
+                    ->where(['id' => $_iId])
+                    ->first()
+                    ->toArray();
 
-    // public function getPostListByCondition(int $_iUserId)
-    // {
-    //     return $this->oPost
-    //         ->where(['user_id' => $_iUserId])
-    //         ->get()
-    //         ->toArray();
-    // }
+    }
+
+    public function deletePost(int $_iId) :bool
+    {
+        return $this->oPost
+                    ->where(['id' => $_iId])
+                    ->delete();
+    }
 }
