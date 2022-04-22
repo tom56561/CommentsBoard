@@ -32,7 +32,9 @@ Route::put('/posts/{post}', 'Posts\PostController@update')->name('posts.update')
 Route::delete('/posts/{post}', 'Posts\PostController@destroy')->name('posts.destroy')->middleware('auth')->middleware('adminCheck');
 
 /*會員系統*/
-Route::get('/users', 'Users\UserController@index')->name('users.index');
+Route::get('/users', 'Users\UserController@index')->name('users.index')->middleware('auth')->middleware('adminCheck');
+Route::put('/users/{user}', 'Users\UserController@update')->name('users.update')->middleware('auth')->middleware('adminCheck');
+Route::delete('/users/{user}', 'Users\UserController@destroy')->name('users.destroy')->middleware('auth')->middleware('adminCheck');
 
 
 

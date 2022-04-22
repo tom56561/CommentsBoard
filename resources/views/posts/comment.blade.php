@@ -4,7 +4,6 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-
             <h2 class="mt-2">留言板</h2>
             <form id="submitForm">
                 @csrf

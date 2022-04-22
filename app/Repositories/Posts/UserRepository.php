@@ -21,6 +21,32 @@ class UserRepository
                     ->toArray();
     }
 
+    public function editUser(int $_iId, string $_sName, string $_sEmail, string $_sRole) :bool
+    {
+        return $this->oUser
+                    ->where(['id' => $_iId])
+                    ->update([
+                        'name' => $_sName,
+                        'email' => $_sEmail,
+                        'role' => $_sRole,
+                    ]);
+    }
+    
+    public function getUserListByCondition(int $_iId) :array
+    {
+        return $this->oUser
+                    ->where(['id' => $_iId])
+                    ->first()
+                    ->toArray();
+
+    }
+
+    public function deleteUser(int $_iId) :bool
+    {
+        return $this->oUser
+                    ->where(['id' => $_iId])
+                    ->delete();
+    }
     
     // public function addNewUser(int $_iUserId, string $_sContent) :array
     // {
@@ -29,26 +55,6 @@ class UserRepository
     //                 ->toArray();
     // }
 
-    // public function editUser(int $_iId, string $_sContent) :bool
-    // {
-    //     return $this->oUser
-    //                 ->where(['id' => $_iId])
-    //                 ->update(['content' => $_sContent]);
-    // }
 
-    // public function getUserListByCondition(int $_iId) :array
-    // {
-    //     return $this->oUser
-    //                 ->where(['id' => $_iId])
-    //                 ->first()
-    //                 ->toArray();
 
-    // }
-
-    // public function deleteUser(int $_iId) :bool
-    // {
-    //     return $this->oUser
-    //                 ->where(['id' => $_iId])
-    //                 ->delete();
-    // }
 }

@@ -38,4 +38,20 @@ class UserService
     {
         return $this->oUserRepo->getUserList();
     }
+
+    public function editUser(int $_iId, string $_sName, string $_sEmail, string $_sRole) :array
+    {
+        
+        $bUpadte = $this->oUserRepo->editUser($_iId, $_sName, $_sEmail, $_sRole);
+        if($bUpadte){
+            return $this->oUserRepo->getUserListByCondition($_iId);
+        }
+            return false;
+
+    }
+    public function deleteUser($_iId) :bool
+    {
+        return $this->oUserRepo->deleteUser($_iId);
+    }
+
 }

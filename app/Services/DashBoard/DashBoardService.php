@@ -28,8 +28,8 @@ class DashBoardService
     public function editPost(int $_iId, string $_sContent) :array
     {
         
-        $bData = $this->oPostRepo->editPost($_iId, $_sContent);
-        if($bData){
+        $bUpadte = $this->oPostRepo->editPost($_iId, $_sContent);
+        if($bUpadte){
             return $this->oPostRepo->getPostListByCondition($_iId);
         }
             return false;
