@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Posts;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\DashBoard\DashBoardService;
+use Illuminate\Support\Facades\Validator;
+
 
 class PostController extends Controller
 {
@@ -19,6 +21,14 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    // protected function validator(Request $_oRequest)
+    // {
+    //     return Validator::make($_oRequest, [
+    //         'content' => ['required'],
+    //     ]);
+    // }
+
     public function index()
     {
         $aData = $this->oDashBoardService->getPostListByDesc();
@@ -44,9 +54,15 @@ class PostController extends Controller
      */
     public function store(Request $_oRequest)
     {
+        dd($_oRequest);
+        $_oRequest->validate([
+            'content' => 'required',
+        ]);
+        
         $iUserId = \Auth::id();
+        $sUserName =\Auth::user()->name;
         $sContent = $_oRequest->content;
-        $aData = $this->oDashBoardService->addNewPost($iUserId, $sContent);
+        $aData = $this->oDashBoardService->addNewPost($iUserId, $sContent, $sUserName);
         $aResult = [
             'result'     => true,
             'data'       => $aData,
@@ -84,7 +100,9 @@ class PostController extends Controller
      */
     public function update(Request $_oRequest, $_iId)
     {
-
+        $_oRequest->validate([
+            'content' => 'required',
+        ]);
         $sContent = $_oRequest->content;
         $aData = $this->oDashBoardService->editPost($_iId, $sContent);
         $aResult = [

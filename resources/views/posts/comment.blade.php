@@ -3,14 +3,11 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <h2 class="mt-2">留言板</h2>
+        <div class="col-md-6">
+            <h2 class="mt-2 ms-3">留言板</h2>
             <form id="submitForm">
                 @csrf
                 <div class="pt-2">
-                    <img class="rounded-circle bg-cover img-host ms-4"
-                        src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-                        alt="">
                     <div class="ms-3 form-floating d-inline-block align-middle">
                         <textarea class="form-control" style="width: 470px;" placeholder="Leave a comment here"
                             id="content" name="content"></textarea>
@@ -24,13 +21,10 @@
                 @foreach ( $comments['data'] as $data)
                 <div id="{{$data['id']}}" class="pt-3">
                     <div class="pt-3 d-flex flex-row">
-                        <img class="rounded-circle bg-cover img-host ms-4"
-                            src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-                            alt="">
                         <div id="post">
                             <div class="ms-3 bg-white p-3 commentW border-card">
                                 <div class="d-flex justify-content-between">
-                                    <span class="pb-1">使用者{{ $data['user_id'] }}</span>
+                                    <span class="pb-1">{{ $data['name'] }}</span>
                                     <span>
                                         @if( Auth::user()->role == 'admin' or Auth::user()->id == $data['user_id'] )
                                         <button class="edit btn btn-sm btn-primary">Edit</button>
@@ -50,7 +44,6 @@
                 </div>
                 @endforeach
             </div>
-            
         </div>
     </div>
 </div>
@@ -60,47 +53,50 @@
     $("#submitForm").on('submit',function(e){
         e.preventDefault();
         let content = $("#content").val();
-        $("#content").val('');
-        $.ajax({
-            url: "/posts",
-            type: "POST",
-            data:{
-                "_token":"{{ csrf_token() }}",
-                content:content,
-            },
-            success:function(response){
-                if(response){
-                    console.log(response);
-                    $('#allComments').prepend(
-                        '<div id='+response.data.id+' class="pt-3">'+
-                            '<div class="pt-3 d-flex flex-row">'+
-                            '<img class="rounded-circle bg-cover img-host ms-4" src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80">'+
-                                '<div id="post">'+
-                                    '<div class="ms-3 bg-white p-3 commentW border-card">'+
-                                        '<div class="d-flex justify-content-between">'+
-                                            '<span class="pb-1">'+'使用者'+response.data.user_id+'</span>'+
-                                            '<span>'+
-                                                '<button class="edit btn btn-sm btn-primary">Edit</button>'+
-                                                '<button class="save btn btn-sm btn-success d-none">Save</button>'+
-                                                '@if( Auth::user()->role == "admin")'+
-                                                '<button class="delete btn btn-sm btn-orange d-none">Delete</button>'+
-                                                '@endif'+
-                                            '</span>'+
+        if (content.length>0){
+            $.ajax({
+                url: "/posts",
+                type: "POST",
+                data:{
+                    "_token":"{{ csrf_token() }}",
+                    content:content,
+                },
+                success:function(response){
+                    if(response){
+                        console.log(response);
+                        $('#allComments').prepend(
+                            '<div id='+response.data.id+' class="pt-3">'+
+                                '<div class="pt-3 d-flex flex-row">'+
+                                    '<div id="post">'+
+                                        '<div class="ms-3 bg-white p-3 commentW border-card">'+
+                                            '<div class="d-flex justify-content-between">'+
+                                                '<span class="pb-1">'+response.data.name+'</span>'+
+                                                '<span>'+
+                                                    '<button class="edit btn btn-sm btn-primary">Edit</button>'+
+                                                    '<button class="save btn btn-sm btn-success d-none">Save</button>'+
+                                                    '@if( Auth::user()->role == "admin")'+
+                                                    '<button class="delete btn btn-sm btn-orange d-none">Delete</button>'+
+                                                    '@endif'+
+                                                '</span>'+
+                                            '</div>'+
+                                            '<span class="id d-none">'+response.data.id+'</span>'+
+                                            '<span class="fw-light content">'+response.data.content+'</span>'+
                                         '</div>'+
-                                        '<span class="id d-none">'+response.data.id+'</span>'+
-                                        '<span class="fw-light content">'+response.data.content+'</span>'+
+                                        '<span class="ms-3 ps-3 fw-light fs-6">'+response.data.created_at+'</span>'+
                                     '</div>'+
-                                    '<span class="ms-3 ps-3 fw-light fs-6">'+response.data.created_at+'</span>'+
                                 '</div>'+
-                            '</div>'+
-                        '</div>'
-                    )
-                }
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) { 
-                alert("Error: " + errorThrown+'\n'+ XMLHttpRequest.responseJSON.UserRole_Error); 
-            }   
-        });
+                            '</div>'
+                        )
+                    }
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                    alert("Error: " + errorThrown+'\n'+ XMLHttpRequest.responseJSON.UserRole_Error); 
+                }   
+            });
+            $("#content").val('');
+        }else{
+            alert('Content is empty');
+        }
     })
 
     /**編輯留言**/
@@ -122,28 +118,34 @@
         let sContent = mInputValue.val();
         console.log(sContent);
         var iId = $(this).closest('#post').find('.id').text();
-        $.ajax({
-            url: "/posts/"+iId,
-            type: "PUT",
-            data:{
-                "_token":"{{ csrf_token() }}",
-                content:sContent,
-                id:iId,
-            },
-            success:function(response){
-                if(response){
-                    var sContent = response.data.content;
-                    mInputValue.html(sContent);
+        if (sContent.length>0){
+            $.ajax({
+                url: "/posts/"+iId,
+                type: "PUT",
+                data:{
+                    "_token":"{{ csrf_token() }}",
+                    content:sContent,
+                    id:iId,
+                },
+                success:function(response){
+                    if(response){
+                        var sContent = response.data.content;
+                        mInputValue.html(sContent);
+                        mInputValue.contents().unwrap();
+                    }
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                    mInputValue.html(sOriginalContent);
                     mInputValue.contents().unwrap();
-                }
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) { 
-                mInputValue.html(sOriginalContent);
-                mInputValue.contents().unwrap();
-                alert(XMLHttpRequest.responseJSON.UserRole_Error); 
-            }   
-
-        });
+                    alert(XMLHttpRequest.responseJSON.UserRole_Error); 
+                }   
+    
+            });
+        }else{
+            alert('Content is empty');
+            mInputValue.html(sOriginalContent);
+            mInputValue.contents().unwrap();
+        }
         $('.edit').removeClass("d-none");
         $(this).siblings('.edit').removeClass("d-none");
         $(this).siblings('.delete').addClass("d-none");

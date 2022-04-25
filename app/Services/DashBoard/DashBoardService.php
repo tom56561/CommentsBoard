@@ -16,13 +16,20 @@ class DashBoardService
 
     public function getPostListByDesc() :array
     {
-        return $this->oPostRepo->getPostListByDesc();
+        $aData = $this->oPostRepo->getPostListByDesc();
+        foreach($aData as $key => $aTime){
+            $aData[$key]['created_at'] = date('Y-m-d H:i:s', strtotime($aTime['created_at']));
+        }
+        return $aData;
 
     }
 
-    public function addNewPost(int $_iUserId, string $_sContent) :array
+    public function addNewPost(int $_iUserId, string $_sContent, string $_sUserName) :array
     {
-        return $this->oPostRepo->addNewPost($_iUserId, $_sContent);
+        $aData = $this->oPostRepo->addNewPost($_iUserId, $_sContent);
+        $aData['created_at'] = date('Y-m-d H:i:s', strtotime($aData['created_at']));
+        $aData += ['name' => $_sUserName];
+        return $aData;
     }
 
     public function editPost(int $_iId, string $_sContent) :array

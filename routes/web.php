@@ -35,6 +35,8 @@ Route::delete('/posts/{post}', 'Posts\PostController@destroy')->name('posts.dest
 Route::get('/users', 'Users\UserController@index')->name('users.index')->middleware('auth')->middleware('adminCheck');
 Route::put('/users/{user}', 'Users\UserController@update')->name('users.update')->middleware('auth')->middleware('adminCheck');
 Route::delete('/users/{user}', 'Users\UserController@destroy')->name('users.destroy')->middleware('auth')->middleware('adminCheck');
+Route::post('/users/search', 'Users\UserController@search')->name('users.search')->middleware('auth');
+
 
 
 

@@ -18,6 +18,8 @@ class PostRepository
     {
         return $this->oPost
                     ->orderBy('id','DESC')
+                    ->join('users','posts.user_id', '=', 'users.id')
+                    ->select('posts.*', 'users.name')
                     ->get()
                     ->toArray();
     }

@@ -36,7 +36,11 @@ class UserService
 
     public function getUserList() :array
     {
-        return $this->oUserRepo->getUserList();
+        $aData = $this->oUserRepo->getUserList();
+        foreach($aData as $key => $aTime){
+            $aData[$key]['created_at'] = date('Y-m-d H:i:s', strtotime($aTime['created_at']));
+        }
+        return $aData;
     }
 
     public function editUser(int $_iId, string $_sName, string $_sEmail, string $_sRole) :array
@@ -52,6 +56,15 @@ class UserService
     public function deleteUser($_iId) :bool
     {
         return $this->oUserRepo->deleteUser($_iId);
+    }
+
+    public function searchUser(string $_sName, string $_sEmail, string $_sRole) :array
+    {
+        $aData = $this->oUserRepo->searchUser($_sName, $_sEmail, $_sRole);
+        foreach($aData as $key => $aTime){
+            $aData[$key]['created_at'] = date('Y-m-d H:i:s', strtotime($aTime['created_at']));
+        }
+        return $aData;
     }
 
 }

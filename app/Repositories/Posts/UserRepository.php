@@ -47,14 +47,22 @@ class UserRepository
                     ->where(['id' => $_iId])
                     ->delete();
     }
+
+    public function searchUser(string $_sName, string $_sEmail, string $_sRole) :array
+    {
+        $oUser = $this->oUser;
+        if($_sName != ''){
+            $oUser = $oUser->where('name', 'like', '%'.$_sName.'%');
+        }
+        if($_sEmail != ''){
+            $oUser = $oUser->where('name', 'like', '%'.$_sEmail.'%');
+        }
+        if($_sRole != 'all'){
+            $oUser = $oUser->where(['role' => $_sRole]);
+        }
+        $aUser = $oUser->get()->toArray();
+        return $aUser;
+    }
     
-    // public function addNewUser(int $_iUserId, string $_sContent) :array
-    // {
-    //     return $this->oUser
-    //                 ->create(['user_id' => $_iUserId, 'content' => $_sContent])
-    //                 ->toArray();
-    // }
-
-
 
 }
