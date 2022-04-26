@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<ruleset name="CustomStandard">
+   <arg value="s"/>
+   <arg name="colors"/>
+   <rule ref="PSR12">
+      <exclude name="PSR1.Classes.ClassDeclaration.MissingNamespace"/>
+      <exclude name="PSR1.Methods.CamelCapsMethodName.NotCamelCaps"/>
+      <exclude name="Squiz.Classes.ValidClassName.NotCamelCaps"/>
+      <exclude name="PSR2.ControlStructures.SwitchDeclaration.TerminatingComment"/>
+      <exclude name="Generic.Files.LineLength.TooLong"/>
+      <exclude name="PSR2.Methods.FunctionCallSignature.MultipleArguments"/>
+      <exclude name="PSR12.Properties.ConstantVisibility.NotFound"/>
+      <exclude name="PSR2.Methods.MethodDeclaration.Underscore"/>
+      <exclude name="PSR1.Files.SideEffects.FoundWithSymbols"/>
+   </rule>
+</ruleset>
