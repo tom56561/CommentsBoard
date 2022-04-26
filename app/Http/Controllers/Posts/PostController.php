@@ -54,7 +54,6 @@ class PostController extends Controller
      */
     public function store(Request $_oRequest)
     {
-        dd($_oRequest);
         $_oRequest->validate([
             'content' => 'required',
         ]);

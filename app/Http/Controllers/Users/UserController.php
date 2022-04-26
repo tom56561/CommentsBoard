@@ -52,15 +52,17 @@ class UserController extends Controller
 
     public function search(Request $_oRequest)
     {
-    $sName = $_oRequest->name;
-    $sEmail = $_oRequest->email;
-    $sRole = $_oRequest->role;
-    $aData = $this->oUserService->searchUser($sName, $sEmail, $sRole);
-    $aResult = [
-        'result'     => true,
-        'data'       => $aData,
-    ];
-    return view('users.userList')->with('userList',$aResult);
+    
+        $sName = $_oRequest->name;
+        $sEmail = $_oRequest->email;
+        $sRole = $_oRequest->role;
+        $aDatefilter = explode(" to ",$_oRequest->datefilter);
+        $aData = $this->oUserService->searchUser($sName, $sEmail, $sRole, $aDatefilter);
+        $aResult = [
+            'result'     => true,
+            'data'       => $aData,
+        ];
+        return view('users.userList')->with('userList',$aResult);
     }
 
 }

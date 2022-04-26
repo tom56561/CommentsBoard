@@ -48,17 +48,21 @@ class UserRepository
                     ->delete();
     }
 
-    public function searchUser(string $_sName, string $_sEmail, string $_sRole) :array
+    public function searchUser(string $_sName, string $_sEmail, string $_sRole, array $_aDatefilter) :array
     {
         $oUser = $this->oUser;
         if($_sName != ''){
             $oUser = $oUser->where('name', 'like', '%'.$_sName.'%');
         }
         if($_sEmail != ''){
-            $oUser = $oUser->where('name', 'like', '%'.$_sEmail.'%');
+            $oUser = $oUser->where('email', 'like', '%'.$_sEmail.'%');
         }
         if($_sRole != 'all'){
             $oUser = $oUser->where(['role' => $_sRole]);
+        }
+        if($_aDatefilter[0] != ''){
+            $oUser = $oUser->whereDate('created_at', '>=', $_aDatefilter[0])
+                            ->whereDate('created_at', '<=', $_aDatefilter[1]);
         }
         $aUser = $oUser->get()->toArray();
         return $aUser;

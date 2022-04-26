@@ -33,18 +33,24 @@
                                 <label class="input-group-text" for="role">Role</label>
                             </div>
                             <select class="form-control" id="role" name="role">
-                                <option value="all" selected>all</option>
+                                <option value="all">all</option>
                                 <option value="user">user</option>
                                 <option value="admin">admin</option>
                             </select>
                         </div>
                     </div>
-                    <!-- <div class="col-md-3">
-                    <input type="text" name="datetimes"/>
-                    </div> -->
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="role">Time</label>
+                            </div>
+                            <input type="text" class="form-control" name="datefilter" autocomplete="off" value=""/>
+                        </div>
+                    </div>
                     <div class="col-md-1">
                         <button type="sumbit" class="btn btn-main ms-3 sendData">搜尋</button>
                     </div>
+
                 </div>
             </form>
         </div>
@@ -81,17 +87,27 @@
     </div>
 </div>
 <script type="application/javascript">
-        // $(function() {
-        // $('input[name="datetimes"]').daterangepicker({
-        //     timePicker: true,
-        //     startDate: moment().startOf('hour'),
-        //     endDate: moment().startOf('hour').add(32, 'hour'),
-        //     locale: {
-        //     format: 'M/DD hh:mm A'
-        //     }
-        // });
-        // });
-        
+    /**Date Range Picker**/
+    $(function(){
+        $('input[name="datefilter"]').daterangepicker(
+        {
+            autoUpdateInput: false,
+            locale: {
+                cancelLabel: 'Clear',
+                format: 'YYYY-MM-DD'
+            },
+            startDate: '2022-04-01',
+            endDate: '2022-04-01'
+        });
+        $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('YYYY-MM-DD') + ' to ' + picker.endDate.format('YYYY-MM-DD'));
+        });
+
+        $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
+        });
+    });
+
     /**新增留言**/
     $("#submitForm").on('submit',function(e){
      

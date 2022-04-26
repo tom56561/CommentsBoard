@@ -58,9 +58,9 @@ class UserService
         return $this->oUserRepo->deleteUser($_iId);
     }
 
-    public function searchUser(string $_sName, string $_sEmail, string $_sRole) :array
+    public function searchUser(string $_sName, string $_sEmail, string $_sRole, array $_aDatefilter) :array
     {
-        $aData = $this->oUserRepo->searchUser($_sName, $_sEmail, $_sRole);
+        $aData = $this->oUserRepo->searchUser($_sName, $_sEmail, $_sRole, $_aDatefilter);
         foreach($aData as $key => $aTime){
             $aData[$key]['created_at'] = date('Y-m-d H:i:s', strtotime($aTime['created_at']));
         }
