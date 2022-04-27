@@ -37,8 +37,8 @@ class UserService
     public function getUserList(): array
     {
         $aData = $this->oUserRepo->getUserList();
-        foreach ($aData as $key => $aTime) {
-            $aData[$key]['created_at'] = date('Y-m-d H:i:s', strtotime($aTime['created_at']));
+        foreach ($aData as $ikey => $aTime) {
+            $aData[$ikey]['created_at'] = date('Y-m-d H:i:s', strtotime($aTime['created_at']));
         }
         return $aData;
     }
@@ -60,8 +60,8 @@ class UserService
     public function searchUser(string $_sName, string $_sEmail, string $_sRole, array $_aDatefilter): array
     {
         $aData = $this->oUserRepo->searchUser($_sName, $_sEmail, $_sRole, $_aDatefilter);
-        foreach ($aData as $key => $aTime) {
-            $aData[$key]['created_at'] = date('Y-m-d H:i:s', strtotime($aTime['created_at']));
+        foreach ($aData as $ikey => $aTime) {
+            $aData[$ikey]['created_at'] = date('Y-m-d H:i:s', strtotime($aTime['created_at']));
         }
         return $aData;
     }

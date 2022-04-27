@@ -12,7 +12,7 @@
                             <span class="input-group-text" id="basic-addon1">
                             <img src="https://assets.tokopedia.net/assets-tokopedia-lite/v2/zeus/kratos/af2f34c3.svg" alt="">
                             </span>
-                            <input type="text" class="form-control"  placeholder="Name" id="name" name="name">
+                            <input type="text" class="form-control"  placeholder="Name" id="name" name="name" value="{{ isset($aSearch) ? $aSearch['name'] : '' }}">
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -20,23 +20,23 @@
                             <span class="input-group-text" id="basic-addon1">
                             <img src="https://assets.tokopedia.net/assets-tokopedia-lite/v2/zeus/kratos/af2f34c3.svg" alt="">
                             </span>
-                            <input type="text" class="form-control"  placeholder="Email" id="email" name="email">
+                            <input type="text" class="form-control"  placeholder="Email" id="email" name="email" value="{{ isset($aSearch) ? $aSearch['email'] : '' }}">
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="input-group">
                             <label class="input-group-text" for="role">Role</label>
                             <select class="form-control" id="role" name="role">
-                                <option value="all">all</option>
-                                <option value="user">user</option>
-                                <option value="admin">admin</option>
+                                <option value="all" {{ isset($aSearch) && $aSearch['role'] == "all" ? 'selected' : '' }}>all</option>
+                                <option value="user" {{ isset($aSearch) && $aSearch['role'] == "user" ? 'selected' : '' }}>user</option>
+                                <option value="admin" {{ isset($aSearch) && $aSearch['role'] == "admin" ? 'selected' : '' }}>admin</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="input-group">
                             <label class="input-group-text" for="role">Time</label>
-                            <input type="text" class="form-control" name="datefilter" autocomplete="off" value=""/>
+                            <input type="text" class="form-control" name="datefilter" autocomplete="off" value="{{ isset($aSearch) ? $aSearch['datefilter'] : '' }}" readonly/>
                         </div>
                     </div>
                     <div class="col-md-1">
@@ -64,12 +64,12 @@
                         <th scope="row col-md-2">#{{$data['id']}}</th>
                         <td class="col-md-2 data">{{$data['name']}}</td>
                         <td class="col-md-3 data">{{$data['email']}}</td>
-                        <td class="col-md-1 data">{{$data['role']}}</td>
+                        <td class="col-md-1 role">{{$data['role']}}</td>
                         <td class="col-md-2">{{$data['created_at']}}</td>
                         <td class="col-md-2">
                             <button class="edit btn btn-sm btn-primary">Edit</button>
                             <button class="save btn btn-sm btn-success d-none">Save</button>
-                            <button class="delete btn btn-sm btn-orange d-none">Delete</button>
+                            <button class="delete btn btn-sm btn-orange ">Delete</button>
                         </td>
                     </tr>
                 @endforeach
@@ -102,6 +102,7 @@
     });
 
     var aOriginalData = new Array;
+    var sOriginalRole;
     /**Edit User**/
     $(document).on('click', '.edit', function() {
         $(this).parent().siblings('td.data').each(function() {
@@ -109,10 +110,12 @@
             $(this).html('<input id="inputValue" class="inputValue" value="' + sContent + '" />');
             aOriginalData.push(sContent);
         });
+        sOriginalRole = $(this).parent().siblings('td.role').text();
+        $(this).parent().siblings('td.role').html('<select id="role" class="editRole" name="role"><option value="user">user</option><option value="admin">admin</option></select>');
         $(this).siblings('.save').removeClass("d-none");
-        $(this).siblings('.delete').removeClass("d-none");
         $(this).addClass("d-none");
         $('.edit').addClass("d-none");
+        $('.delete').addClass("d-none");
     });
 
     /**Save User**/
@@ -122,8 +125,8 @@
             var content = $(this).val();
             aContent.push(content);
         });
+        var sRole = $('.editRole').val();
         var iId = $(this).parent().parent().closest('tr').attr('id');
-        console.log(iId);
         $.ajax({
             url: "/users/"+iId,
             type: "PUT",
@@ -131,20 +134,20 @@
                 "_token":"{{ csrf_token() }}",
                 name:aContent[0],
                 email:aContent[1],
-                role:aContent[2],
+                role:sRole
             },
             success:function(response){
                 if(response){
                     var aData = new Array();
                     aData[0] = response.data.name;
                     aData[1] = response.data.email;
-                    aData[2] = response.data.role;
                     var i = 0;
                     $('input.inputValue').each(function() {
                         $(this).html(aData[i]);
                         $(this).contents().unwrap();
                         i++;
                     });
+                    $('.editRole').parent().html('<td class="col-md-1 role">'+response.data.role+'</td>');
                 }
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) { 
@@ -154,12 +157,13 @@
                     $(this).contents().unwrap();
                     i++;
                 });
+                $('.editRole').parent().html('<td class="col-md-1 role">'+sOriginalRole+'</td>');
                 alert(XMLHttpRequest.responseJSON.UserRole_Error); 
             }
         });
+        $('.delete').removeClass("d-none");
         $('.edit').removeClass("d-none");
         $(this).siblings('.edit').removeClass("d-none");
-        $(this).siblings('.delete').addClass("d-none");
         $(this).addClass("d-none"); 
     })
 
@@ -188,6 +192,7 @@
                         $(this).contents().unwrap();
                         i++;
                     });
+                    $('.editRole').parent().html('<td class="col-md-1 role">'+sOriginalRole+'</td>');
                     alert(XMLHttpRequest.responseJSON.UserRole_Error); 
                 }  
             });
@@ -198,11 +203,9 @@
                 $(this).contents().unwrap();
                 i++;
             });
+            $('.editRole').parent().html('<td class="col-md-1 role">'+sOriginalRole+'</td>');
+
         }
-        $('.edit').removeClass("d-none");
-        $(this).siblings('.edit').removeClass("d-none");
-        $(this).siblings('.save').addClass("d-none");
-        $(this).addClass("d-none"); 
     })
 </script>
 @endsection

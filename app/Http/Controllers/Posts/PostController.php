@@ -45,12 +45,6 @@ class PostController extends Controller
         return response()->json($aResult);
     }
 
-    public function show($id)
-    {
-        return 'show';
-    }
-
-
     public function update(Request $_oRequest, $_iId)
     {
         $_oRequest->validate([

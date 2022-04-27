@@ -58,7 +58,7 @@ class UserRepository
         if ($_sRole != 'all') {
             $oUser = $oUser->where(['role' => $_sRole]);
         }
-        if ($_aDatefilter[0] != '') {
+        if ($_aDatefilter[0] != '' && $_aDatefilter[1] != '') {
             $oUser = $oUser->whereDate('created_at', '>=', $_aDatefilter[0])
                             ->whereDate('created_at', '<=', $_aDatefilter[1]);
         }

@@ -22,7 +22,7 @@ class UserEditPermission
         $bUserEditPermission = $this->oUserService->checkUserEditPermission($iPostId, $sUserId);
         $sUserRole = \Auth::user()->role;
         $bIsAdmin = $this->oUserService->checkAdmin($sUserRole);
-        if ($bUserEditPermission or $bIsAdmin) {
+        if ($bUserEditPermission || $bIsAdmin) {
             return $next($_oRequest);
         }
             return response()->json(['UserRole_Error' => 'You are not the Author of the post'], 401);

@@ -21,7 +21,6 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/posts', 'Posts\PostController@index')->name('posts.index');
     Route::post('/posts', 'Posts\PostController@store')->name('posts.store');
-    Route::get('/posts/{post}', 'Posts\PostController@show')->name('posts.show');
     Route::put('/posts/{post}', 'Posts\PostController@update')->name('posts.update')->middleware('userEdit');
     Route::delete('/posts/{post}', 'Posts\PostController@destroy')->name('posts.destroy')->middleware('adminCheck');
 });

@@ -55,10 +55,16 @@ class UserController extends Controller
         $sRole = $_oRequest->role;
         $aDatefilter = explode(" to ", $_oRequest->datefilter);
         $aData = $this->oUserService->searchUser($sName, $sEmail, $sRole, $aDatefilter);
+        $aSearch = [
+            'name'       => $sName,
+            'email'      => $sEmail,
+            'role'       => $sRole,
+            'datefilter' => $_oRequest->datefilter
+        ];
         $aResult = [
             'result'     => true,
             'data'       => $aData,
         ];
-        return view('users.userList')->with('userList', $aResult);
+        return view('users.userList')->with('userList', $aResult)->with('aSearch', $aSearch);
     }
 }

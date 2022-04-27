@@ -26,7 +26,7 @@
                                 <div class="d-flex justify-content-between">
                                     <span class="pb-1">{{ $data['name'] }}</span>
                                     <span>
-                                        @if( Auth::user()->role == 'admin' or Auth::user()->id == $data['user_id'] )
+                                        @if( Auth::user()->role == 'admin' || Auth::user()->id == $data['user_id'] )
                                         <button class="edit btn btn-sm btn-primary">Edit</button>
                                         <button class="save btn btn-sm btn-success d-none">Save</button>
                                         @if( Auth::user()->role == 'admin')

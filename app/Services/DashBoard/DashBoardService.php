@@ -17,8 +17,8 @@ class DashBoardService
     public function getPostListByDesc(): array
     {
         $aData = $this->oPostRepo->getPostListByDesc();
-        foreach ($aData as $key => $aTime) {
-            $aData[$key]['created_at'] = date('Y-m-d H:i:s', strtotime($aTime['created_at']));
+        foreach ($aData as $ikey => $aTime) {
+            $aData[$ikey]['created_at'] = date('Y-m-d H:i:s', strtotime($aTime['created_at']));
         }
         return $aData;
     }
