@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Services\DashBoard\DashBoardService;
 use Illuminate\Support\Facades\Validator;
 
-
 class PostController extends Controller
 {
     private $oDashBoardService;
@@ -26,7 +25,7 @@ class PostController extends Controller
             'data'   => $aData,
         ];
 
-        return view('posts.comment')->with('comments',$aResult);
+        return view('posts.comment')->with('comments', $aResult);
     }
 
     public function store(Request $_oRequest)
@@ -34,9 +33,8 @@ class PostController extends Controller
         $_oRequest->validate([
             'content' => 'required',
         ]);
-        
         $iUserId = \Auth::id();
-        $sUserName =\Auth::user()->name;
+        $sUserName = \Auth::user()->name;
         $sContent = $_oRequest->content;
         $aData = $this->oDashBoardService->addNewPost($iUserId, $sContent, $sUserName);
         $aResult = [
@@ -45,9 +43,7 @@ class PostController extends Controller
         ];
 
         return response()->json($aResult);
- 
     }
-
 
     public function show($id)
     {

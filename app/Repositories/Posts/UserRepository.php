@@ -4,7 +4,6 @@ namespace App\Repositories\Posts;
 
 use App\Models\User;
 
-
 class UserRepository
 {
     private $oUser;
@@ -14,14 +13,14 @@ class UserRepository
         $this->oUser = $_oUser;
     }
 
-    public function getUserList() :array
+    public function getUserList(): array
     {
         return $this->oUser
                     ->get()
                     ->toArray();
     }
 
-    public function editUser(int $_iId, string $_sName, string $_sEmail, string $_sRole) :bool
+    public function editUser(int $_iId, string $_sName, string $_sEmail, string $_sRole): bool
     {
         return $this->oUser
                     ->where(['id' => $_iId])
@@ -31,8 +30,8 @@ class UserRepository
                         'role' => $_sRole,
                     ]);
     }
-    
-    public function getUserListByCondition(int $_iId) :array
+
+    public function getUserListByCondition(int $_iId): array
     {
         return $this->oUser
                     ->where(['id' => $_iId])
@@ -40,32 +39,30 @@ class UserRepository
                     ->toArray();
     }
 
-    public function deleteUser(int $_iId) :bool
+    public function deleteUser(int $_iId): bool
     {
         return $this->oUser
                     ->where(['id' => $_iId])
                     ->delete();
     }
 
-    public function searchUser(string $_sName, string $_sEmail, string $_sRole, array $_aDatefilter) :array
+    public function searchUser(string $_sName, string $_sEmail, string $_sRole, array $_aDatefilter): array
     {
         $oUser = $this->oUser;
-        if($_sName != ''){
-            $oUser = $oUser->where('name', 'like', '%'.$_sName.'%');
+        if ($_sName != '') {
+            $oUser = $oUser->where('name', 'like', '%' . $_sName . '%');
         }
-        if($_sEmail != ''){
-            $oUser = $oUser->where('email', 'like', '%'.$_sEmail.'%');
+        if ($_sEmail != '') {
+            $oUser = $oUser->where('email', 'like', '%' . $_sEmail . '%');
         }
-        if($_sRole != 'all'){
+        if ($_sRole != 'all') {
             $oUser = $oUser->where(['role' => $_sRole]);
         }
-        if($_aDatefilter[0] != ''){
+        if ($_aDatefilter[0] != '') {
             $oUser = $oUser->whereDate('created_at', '>=', $_aDatefilter[0])
                             ->whereDate('created_at', '<=', $_aDatefilter[1]);
         }
         $aUser = $oUser->get()->toArray();
         return $aUser;
     }
-    
-
 }

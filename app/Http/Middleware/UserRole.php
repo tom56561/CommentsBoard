@@ -6,7 +6,6 @@ use Closure;
 use Illuminate\Http\Request;
 use App\Services\User\UserService;
 
-
 class UserRole
 {
     private $oUserService;
@@ -20,9 +19,9 @@ class UserRole
     {
         $sUserRole = \Auth::user()->role;
         $bIsAdmin = $this->oUserService->checkAdmin($sUserRole);
-        if($bIsAdmin){
+        if ($bIsAdmin) {
             return $next($_oRequest);
         }
-            return response()->json(['UserRole_Error'=>'You do not have Permission'], 401);    
+            return response()->json(['UserRole_Error' => 'You do not have Permission'], 401);
     }
 }

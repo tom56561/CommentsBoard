@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\User\UserService;
 
-
 class UserController extends Controller
 {
     private $oUserService;
@@ -24,8 +23,7 @@ class UserController extends Controller
             'data'   => $aUserList,
         ];
 
-        // return $aUserList;
-        return view('users.userList')->with('userList',$aResult);
+        return view('users.userList')->with('userList', $aResult);
     }
 
     public function update(Request $_oRequest, $_iId)
@@ -52,17 +50,15 @@ class UserController extends Controller
 
     public function search(Request $_oRequest)
     {
-    
         $sName = $_oRequest->name;
         $sEmail = $_oRequest->email;
         $sRole = $_oRequest->role;
-        $aDatefilter = explode(" to ",$_oRequest->datefilter);
+        $aDatefilter = explode(" to ", $_oRequest->datefilter);
         $aData = $this->oUserService->searchUser($sName, $sEmail, $sRole, $aDatefilter);
         $aResult = [
             'result'     => true,
             'data'       => $aData,
         ];
-        return view('users.userList')->with('userList',$aResult);
+        return view('users.userList')->with('userList', $aResult);
     }
-
 }

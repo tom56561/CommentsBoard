@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Posts extends Model
 {
     use HasFactory;
-    
 
     protected $fillable = [
         'user_id', 'content',
@@ -16,10 +15,6 @@ class Posts extends Model
 
     public function user()
     {
-        return $this->hasOne('App\Models\User', 'id','user_id');
+        return $this->hasOne('App\Models\User', 'id', 'user_id');
     }
-    // public function user()
-    // {
-    //     return $this->belongsTo('App\Models\User');
-    // }
 }

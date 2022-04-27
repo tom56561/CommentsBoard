@@ -33,4 +33,3 @@ Route::group(['middleware' => ['auth','adminCheck']], function () {
     Route::delete('/users/{user}', 'Users\UserController@destroy')->name('users.destroy');
     Route::post('/users/search', 'Users\UserController@search')->name('users.search');
 });
-

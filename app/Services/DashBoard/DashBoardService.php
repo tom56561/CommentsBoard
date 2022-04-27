@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Services\DashBoard;
-use App\Repositories\Posts\PostRepository;
 
+use App\Repositories\Posts\PostRepository;
 
 //  留言板相關邏輯
 class DashBoardService
@@ -14,16 +14,16 @@ class DashBoardService
         $this->oPostRepo = $_oPostRepo;
     }
 
-    public function getPostListByDesc() :array
+    public function getPostListByDesc(): array
     {
         $aData = $this->oPostRepo->getPostListByDesc();
-        foreach($aData as $key => $aTime){
+        foreach ($aData as $key => $aTime) {
             $aData[$key]['created_at'] = date('Y-m-d H:i:s', strtotime($aTime['created_at']));
         }
         return $aData;
     }
 
-    public function addNewPost(int $_iUserId, string $_sContent, string $_sUserName) :array
+    public function addNewPost(int $_iUserId, string $_sContent, string $_sUserName): array
     {
         $aData = $this->oPostRepo->addNewPost($_iUserId, $_sContent);
         $aData['created_at'] = date('Y-m-d H:i:s', strtotime($aData['created_at']));
@@ -31,18 +31,17 @@ class DashBoardService
         return $aData;
     }
 
-    public function editPost(int $_iId, string $_sContent) :array
-    {  
+    public function editPost(int $_iId, string $_sContent): array
+    {
         $bUpadte = $this->oPostRepo->editPost($_iId, $_sContent);
-        if($bUpadte){
+        if ($bUpadte) {
             return $this->oPostRepo->getPostListByCondition($_iId);
         }
             return false;
     }
 
-    public function deletePost($_iId) :bool
+    public function deletePost($_iId): bool
     {
         return $this->oPostRepo->deletePost($_iId);
     }
-
 }
