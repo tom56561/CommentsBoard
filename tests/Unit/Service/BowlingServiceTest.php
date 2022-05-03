@@ -86,6 +86,24 @@ class BowlingServiceTest extends TestCase
         $this->assertEquals($aExpected, $aActual);
     }
 
+    public function testSpare()
+    {
+        # Arrange
+        $aExpected = [
+            16, 24, 37, 40
+        ];
+        $aInput = [
+            [5, 5],
+            [6, 2],
+            [8, 2],
+            [3, 0],
+        ];
 
+        # Acr
+        $aActual = App::make(BowlingService::class)->getBowlingList($aInput);
+        # Asset
+        $this->assertEquals($aExpected, $aActual);
+    }
 
 }
+
