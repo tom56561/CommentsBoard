@@ -60,4 +60,32 @@ class BowlingServiceTest extends TestCase
         # Asset
         $this->assertEquals($aExpected, $aActual);
     }
+
+    public function testZeroScore()
+    {
+        # Arrange
+        $aExpected = [
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        ];
+        $aInput = [
+            [0, 0],
+            [0, 0],
+            [0, 0],
+            [0, 0],
+            [0, 0],
+            [0, 0],
+            [0, 0],
+            [0, 0],
+            [0, 0],
+            [0, 0],
+        ];
+
+        # Acr
+        $aActual = App::make(BowlingService::class)->getBowlingList($aInput);
+        # Asset
+        $this->assertEquals($aExpected, $aActual);
+    }
+
+
+
 }

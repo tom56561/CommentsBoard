@@ -8,7 +8,7 @@ class BowlingService
     {
         $aResult = [];
         foreach ($_aInput as $key => $aInput) {
-            $aScore[] = $aInput[0] + $aInput[1];
+            $aScore[$key] = $aInput[0] + $aInput[1];
 
             if(count($aScore) == 1){
                 $aResult[0] = $aScore[0];
