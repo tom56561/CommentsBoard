@@ -15,6 +15,9 @@ class BowlingService
         if (count($aScore) > 1) {
             $aResult[1] = $aScore[0] + $aScore[1];
         }
+        if (count($aScore) > 2){
+            $aResult[2] = $aScore[0] + $aScore[1] + $aScore[2];
+        }
         return $aResult;
 
     }
