@@ -16,14 +16,29 @@ class BowlingServiceTest extends TestCase
         $aExpected = [
             7,
         ];
-
         $aInput = [
             [3, 4],
         ];
 
         # Acr
         $aActual = App::make(BowlingService::class)->getBowlingList($aInput);
+        # Asset
+        $this->assertEquals($aExpected, $aActual);
+    }
 
+    public function testSecondRound()
+    {
+        # Arrange
+        $aExpected = [
+            7, 15
+        ];
+        $aInput = [
+            [3, 4],
+            [6, 2],
+        ];
+
+        # Acr
+        $aActual = App::make(BowlingService::class)->getBowlingList($aInput);
         # Asset
         $this->assertEquals($aExpected, $aActual);
     }
