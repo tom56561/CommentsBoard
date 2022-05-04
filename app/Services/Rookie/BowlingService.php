@@ -10,25 +10,19 @@ class BowlingService
         foreach ($_aInput as $key => $aInput) {
             $iScore = $aInput[0] + $aInput[1];
 
-            if ($key == 9) {
+            if ($key == 9) {                //第10局
                 if ($aInput[0] == 10 || $iScore == 10) {
                     $iScore = $iScore + $_aInput[$key][2];
-                } elseif ($iScore == 10) {
-                    $iScore = $iScore + $_aInput[$key][2];
-                } else {
-                    $iScore = $iScore; 
                 }
-            } else {
-                if ($aInput[0] == 10) {
-                    if ($_aInput[$key+1][0] == 10) {
+            } else {                        //第2~9局
+                if ($aInput[0] == 10) {     //stirke
+                    if ($_aInput[$key+1][0] == 10) {  //連續strike
                         $iScore = $iScore + $_aInput[$key+1][0]+$_aInput[$key+2][0];
                     } else {
                         $iScore = $iScore + $_aInput[$key+1][0]+$_aInput[$key+1][1];
                     }
-                } elseif ($iScore == 10) {
+                } elseif ($iScore == 10) {   //spare
                     $iScore = $iScore + $_aInput[$key+1][0];
-                } else {
-                    $iScore = $iScore;
                 }
             }
 
