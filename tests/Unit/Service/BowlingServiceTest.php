@@ -166,11 +166,11 @@ class BowlingServiceTest extends TestCase
         $this->assertEquals($aExpected, $aActual);
     }
 
-    public function testStrikeAndSpare()
+    public function testTenRoundSrike()
     {
         # Arrange
         $aExpected = [
-            26, 46, 66, 83, 90, 100, 100, 105
+            26, 46, 66, 83, 90, 100, 100, 105, 125, 155
         ];
         $aInput = [
             [10, 0],
@@ -181,6 +181,8 @@ class BowlingServiceTest extends TestCase
             [5, 5],
             [0, 0],
             [3, 2],
+            [9, 1],
+            [10, 10, 10],
         ];
 
         # Acr
