@@ -191,5 +191,30 @@ class BowlingServiceTest extends TestCase
         $this->assertEquals($aExpected, $aActual);
     }
 
+    public function testTenRoundSpare()
+    {
+        # Arrange
+        $aExpected = [
+            26, 46, 66, 83, 90, 100, 100, 105, 118, 134
+        ];
+        $aInput = [
+            [10, 0],
+            [10, 0],
+            [6, 4],
+            [10, 0],
+            [2, 5],
+            [5, 5],
+            [0, 0],
+            [3, 2],
+            [9, 1],
+            [3, 7, 6],
+        ];
+
+        # Acr
+        $aActual = App::make(BowlingService::class)->getBowlingList($aInput);
+        # Asset
+        $this->assertEquals($aExpected, $aActual);
+    }
+
 }
 
