@@ -10,19 +10,7 @@ class BowlingService
         foreach ($_aInput as $key => $aInput) {
             $iScore = $aInput[0] + $aInput[1];
 
-            if ($key == 0) {
-                if ($aInput[0] == 10) {
-                    if ($_aInput[$key+1][0] == 10) {
-                        $iScore = $iScore + $_aInput[$key+1][0]+$_aInput[$key+2][0];
-                    } else {
-                        $iScore = $iScore + $_aInput[$key+1][0]+$_aInput[$key+1][1];
-                    }
-                } elseif ($iScore == 10) {
-                    $iScore = $iScore + $_aInput[$key+1][0];
-                } else {
-                    $iScore = $iScore;
-                }
-            } elseif ($key == 9) {
+            if ($key == 9) {
                 if ($aInput[0] == 10 || $iScore == 10) {
                     $iScore = $iScore + $_aInput[$key][2];
                 } elseif ($iScore == 10) {
@@ -40,7 +28,7 @@ class BowlingService
                 } elseif ($iScore == 10) {
                     $iScore = $iScore + $_aInput[$key+1][0];
                 } else {
-                    $iScore = $iScore; 
+                    $iScore = $iScore;
                 }
             }
 
