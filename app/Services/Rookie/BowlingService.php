@@ -10,7 +10,10 @@ class BowlingService
         foreach ($_aInput as $key => $aInput) {
             $aScore[$key] = $aInput[0] + $aInput[1];
             
-            if ($aScore[$key] == 10) {          //判斷是否為spare
+            if ($aInput[0] == 10) {             //判斷是否為strike
+                $aResult[$key] = $aResult[$key-1] + $aScore[$key] + $_aInput[$key+1][0]+$_aInput[$key+1][1];
+            }
+            elseif ($aScore[$key] == 10) {      //判斷是否為spare
                 if (count($aScore) == 1) {      //判斷是否為第一局
                     $aResult[$key] = $aScore[$key] + $_aInput[$key+1][0];
                 }else{
