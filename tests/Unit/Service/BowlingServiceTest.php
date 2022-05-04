@@ -109,12 +109,12 @@ class BowlingServiceTest extends TestCase
     {
         # Arrange
         $aExpected = [
-            9, 25, 31, 36
+            19, 28, 43, 48
         ];
         $aInput = [
+            [10, 0],
             [5, 4],
             [10, 0],
-            [4, 2],
             [3, 2],
         ];
 
