@@ -8,40 +8,46 @@ class BowlingService
     {
         $aResult = [];
         foreach ($_aInput as $key => $aInput) {
-            $aScore[$key] = $aInput[0] + $aInput[1];
+            $iScore = $aInput[0] + $aInput[1];
 
             if ($key == 0) {
                 if ($aInput[0] == 10) {
                     if ($_aInput[$key+1][0] == 10) {
-                        $aResult[$key] = $aScore[$key] + $_aInput[$key+1][0]+$_aInput[$key+2][0];
+                        $iScore = $iScore + $_aInput[$key+1][0]+$_aInput[$key+2][0];
                     } else {
-                        $aResult[$key] = $aScore[$key] + $_aInput[$key+1][0]+$_aInput[$key+1][1];
+                        $iScore = $iScore + $_aInput[$key+1][0]+$_aInput[$key+1][1];
                     }
-                } elseif ($aScore[$key] == 10) {
-                    $aResult[$key] = $aScore[$key] + $_aInput[$key+1][0];
+                } elseif ($iScore == 10) {
+                    $iScore = $iScore + $_aInput[$key+1][0];
                 } else {
-                    $aResult[$key] = $aScore[$key];
+                    $iScore = $iScore;
                 }
             } elseif ($key == 9) {
-                if ($aInput[0] == 10 || $aScore[$key] == 10) {
-                    $aResult[$key] = $aResult[$key-1] + $aScore[$key] + $_aInput[$key][2];
-                } elseif ($aScore[$key] == 10) {
-                    $aResult[$key] = $aResult[$key-1] + $aScore[$key] + $_aInput[$key][2];
+                if ($aInput[0] == 10 || $iScore == 10) {
+                    $iScore = $iScore + $_aInput[$key][2];
+                } elseif ($iScore == 10) {
+                    $iScore = $iScore + $_aInput[$key][2];
                 } else {
-                    $aResult[$key] = $aResult[$key-1] + $aScore[$key]; 
+                    $iScore = $iScore; 
                 }
             } else {
                 if ($aInput[0] == 10) {
                     if ($_aInput[$key+1][0] == 10) {
-                        $aResult[$key] = $aResult[$key-1] + $aScore[$key] + $_aInput[$key+1][0]+$_aInput[$key+2][0];
+                        $iScore = $iScore + $_aInput[$key+1][0]+$_aInput[$key+2][0];
                     } else {
-                        $aResult[$key] = $aResult[$key-1] + $aScore[$key] + $_aInput[$key+1][0]+$_aInput[$key+1][1];
+                        $iScore = $iScore + $_aInput[$key+1][0]+$_aInput[$key+1][1];
                     }
-                } elseif ($aScore[$key] == 10) {
-                    $aResult[$key] = $aResult[$key-1] + $aScore[$key] + $_aInput[$key+1][0];
+                } elseif ($iScore == 10) {
+                    $iScore = $iScore + $_aInput[$key+1][0];
                 } else {
-                    $aResult[$key] = $aResult[$key-1] + $aScore[$key]; 
+                    $iScore = $iScore; 
                 }
+            }
+
+            if ($key == 0) {
+                $aResult[$key] = $iScore;
+            } else {
+                $aResult[$key] = $aResult[$key-1] + $iScore;
             }
 
         }
