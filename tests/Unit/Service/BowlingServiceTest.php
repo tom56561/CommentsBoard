@@ -123,6 +123,25 @@ class BowlingServiceTest extends TestCase
         # Asset
         $this->assertEquals($aExpected, $aActual);
     }
+    
+    public function testContinuousStrike()
+    {
+        # Arrange
+        $aExpected = [
+            30, 53, 68, 73
+        ];
+        $aInput = [
+            [10, 0],
+            [10, 0],
+            [10, 0],
+            [3, 2],
+        ];
+
+        # Acr
+        $aActual = App::make(BowlingService::class)->getBowlingList($aInput);
+        # Asset
+        $this->assertEquals($aExpected, $aActual);
+    }
 
 }
 
