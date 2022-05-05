@@ -16,7 +16,7 @@ class BowlingService
                 }
             } else {                        //第2~9局
                 if ($aInput[0] == 10) {     //stirke
-                    if ($_aInput[$key+1][0] == 10) {  //連續strike
+                    if ($_aInput[$key+1][0] == 10 && $key < 8 ) {  //連續strike和阻擋第9局offset到第11局
                         $iScore = $iScore + $_aInput[$key+1][0]+$_aInput[$key+2][0];
                     } else {
                         $iScore = $iScore + $_aInput[$key+1][0]+$_aInput[$key+1][1];
