@@ -63,13 +63,13 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-##留言板
-1.登入登出
-2.會員系統、留言板 CRUD
-3.權限(ex:admin全開、一般會員只能留言、..)
-4.coding style
-5.前後端分離 (前後端都透過ajax溝通)
-6.每天都要推commit
-7.驗證登入方式都透過middleware設定，進controller之前就應該先檢查，每次呼叫後端都應該檢查是否登入
-8.搜尋功能
-9.防止空值傳遞
+## 留言板
+- 登入登出
+- 會員系統、留言板 CRUD
+- 權限(ex:admin全開、一般會員只能留言、..)
+- coding style
+- 前後端分離 (前後端都透過ajax溝通)
+- 每天都要推commit
+- 驗證登入方式都透過middleware設定，進controller之前就應該先檢查，每次呼叫後端都應該檢查是否登入
+- 搜尋功能
+- 防止空值傳遞
